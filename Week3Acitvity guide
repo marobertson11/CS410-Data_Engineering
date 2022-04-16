@@ -1,0 +1,81 @@
+DataEng: Data Transport Activity
+[this lab activity references tutorials at confluence.com]
+Make a copy of this document and use it to record your results. Store a PDF copy of the document in your git repository along with your code before submitting for this week. For your code, you create several producer/consumer programs or you might make various features within one program. There is no one single correct way to do it. Regardless, store your code in your repository.
+
+The goal for this week is to gain experience and knowledge of using a streaming data transport system (Kafka). Complete as many of the following exercises as you can. Proceed at a pace that allows you to learn and understand the use of Kafka with python. 
+
+Submit: In-class Activity Submission Form
+A. Initialization
+1.	Get your cloud.google.com account up and running
+0.	Redeem your GCP coupon
+1.	Login to your GCP console
+2.	Create a new, separate VM instance
+2.	Follow the Kafka tutorial from project assignment #1
+0.	Create a separate topic for this in-class activity
+1.	Make it “small” as you will not want to use many resources for this activity. By “small” I mean that you should choose medium or minimal options when asked for any configuration decisions about the topic, cluster, partitions, storage, anything. GCP/Confluent will ask you to choose the configs, and because you are using a free account you should opt for limited resources where possible.  
+2.	Get a basic producer and consumer working with a Kafka topic as described in the tutorials.
+3.	Create a sample breadcrumb data file (named bcsample.json) consisting of a sample of 1000 breadcrumb records. These can be any records because we will not be concerned with the actual contents of the breadcrumb records during this assignment.
+4.	Update your producer to parse your sample.json file and send its contents, one record at a time, to the kafka topic.
+5.	Use your consumer.py program (from the tutorial) to consume your records.
+
+B. Kafka Monitoring
+1.	Find the Kafka monitoring console for your topic. Briefly describe its contents. Do the measured values seem reasonable to you?
+Each message only states the count, then it shows which partition was used, the offset and the timestamp that the message was received by. The measured values do seem reasonable.
+2.	Use this monitoring feature as you do each of the following exercises.
+
+C. Kafka Storage
+1.	Run the linux command “wc bcsample.json”.  Record the output here so that we can verify that your sample data file is of reasonable size.
+1002 1876 24814 ./bcsample.json
+1.	What happens if you run your consumer multiple times while only running the producer once?
+This would make it so that the messages are quickly consumed and the consumer programs would wait endlessly until new information is given.
+2.	Before the consumer runs, where might the data go, where might it be stored?
+The data would be stored in the kafka cloud waiting to be consumed. 
+3.	Is there a way to determine how much data Kafka/Confluent is storing for your topic? Do the Confluent monitoring tools help with this?
+There is no definitive method in which to determine how much the Kafka is being stored, but rather it shows how many bytes per second each production/consumer is operating in. The Cluster overview show how much storage is being used but it doesn’t show each individual topic is being used. The Stream lineage does show how many messages are sent in and out, however. 
+4.	Create a “topic_clean.py” consumer that reads and discards all records for a given topic. This type of program can be very useful during debugging.
+
+D. Multiple Producers
+1.	Clear all data from the topic
+2.	Run two versions of your producer concurrently, have each of them send all 1000 of your sample records. When finished, run your consumer once. Describe the results.
+The consumer runs the first messages from the first producer, then runs the second set of messages after completing the first set. 
+E. Multiple Concurrent Producers and Consumers
+1.	Clear all data from the topic
+2.	Update your Producer code to include a 250 msec sleep after each send of a message to the topic.
+3.	Run two or three concurrent producers and two concurrent consumers all at the same time.
+4.	Describe the results.
+Due to the spacing of the producer, the consumer programs will immediately consumer the available data and then wait for new information to be sent. 
+F. Varying Keys
+1.	Clear all data from the topic
+
+So far you have kept the “key” value constant for each record sent on a topic. But keys can be very useful to choose specific records from a stream.
+ 
+1.	Update your producer code to choose a random number between 1 and 5 for each record’s key.
+2.	Modify your consumer to consume only records with a specific key (or subset of keys).
+3.	Attempt to consume records with a key that does not exist. E.g., consume records with key value of “100”. Describe the results
+Since all records have a key of 1-5, there would be no record with a key of “100”. Therefore, since the consumer program only performs operations on records with a matching key, then it wouldn’t perform actions on the record it has at the moment. +
+4.	Can you create a consumer that only consumes specific keys? If you run this consumer multiple times with varying keys then does it allow you to consume messages out of order while maintaining order within each key?
+Yes, you can create a consumer that consumes specific keys. The method I have used checks each record’s key, then whether it has the matching key it will record its information and add it to the count. It then continues to the next record. If it doesn’t match it will state it doesn’t match and then moves on. Due to there not being any new records, there wouldn’t be any records for the consumer to go through. 
+G. Producer Flush
+The provided tutorial producer program calls “producer.flush()” at the very end, and presumably your new producer also calls producer.flush(). 
+1.	What does Producer.flush() do? 
+Waits till all of the messages in the Producer queue has been delivered. 
+2.	What happens if you do not call producer.flush()?  
+If there is anything in the queue, it won’t be delivered. 
+3.	What happens if you call producer.flush() after sending each record?
+It would be super long and time consuming, but it would ensure that the message would be sent then would start the next record. 
+4.	What happens if you wait for 2 seconds after every 5th record send, and you call flush only after every 15 record sends, and you have a consumer running concurrently?  Specifically, does the consumer receive each message immediately? only after a flush? Something else?
+Due to the spacing of the 2 seconds between each 5th record send, the flush isn’t needed as the messages would be sent during the 2 seconds after each 5th message was produced. The consumer would receive the 5 messages all at once, and then consume each of the 5 records. 
+
+H. Consumer Groups
+1.	Create two consumer groups with one consumer program instance in each group.
+2.	Run the producer and have it produce all 1000 messages from your sample file.
+3.	Run each of the consumers and verify that each consumer consumes all of the 1000 messages.
+4.	Create a second consumer within one of the groups so that you now have three consumers total.
+5.	Rerun the producer and consumers. Verify that each consumer group consumes the full set of messages but that each consumer within a consumer group only consumes a portion of the messages sent to the topic.
+
+I. Kafka Transactions
+1.	Create a new producer, similar to the previous producer, that uses transactions.
+2.	The producer should begin a transaction, send 4 records in the transactions, then wait for 2 seconds, then choose True/False randomly with equal probability. If True then finish the transaction successfully with a commit.  If False is picked then cancel the transaction. 
+3.	Create a new transaction-aware consumer. The consumer should consume the data. It should also use the Confluent/Kaka transaction API with a “read_committed” isolation level. (I can’t find evidence of other isolation levels). 
+4.	Transaction across multiple topics. Create a second topic and modify your producer to send two records to the first topic and two records to the second topic before randomly committing or canceling the transaction. Modify the consumer to consume from the two queues. Verify that it only consumes committed data and not uncommitted or canceled data.
+
