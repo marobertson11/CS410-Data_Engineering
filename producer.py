@@ -54,3 +54,22 @@ if __name__ == '__main__':
     f=open("./bcsample.json", 'r')
     lines =  f.readlines()
     f.close()
+    count=0
+    for n in range(len(lines)):
+        record_key = str(randint(1,5));
+        record_value = json.dumps({'count': n})
+        print("Producing record: {}\t{}".format(record_key, record_value))
+        producer.produce(topic, key=record_key, value=record_value, on_delivery=acked)
+        # p.poll() serves delivery reports (on_delivery)
+        # from previous produce() calls.
+        count+=1
+        if (count % 5 ==0):
+            time.sleep(2.0)
+        if (count % 15 == 0):
+            print("flush")
+            producer.flush()
+        producer.poll(0)
+
+    producer.flush()
+    print("{} messages were produced to topic {}!".format(delivered_records, topic))
+                                                                                     
