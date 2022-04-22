@@ -1,0 +1,77 @@
+DataEng S22: Data Validation Activity
+High quality data is crucial for any data project. This week you’ll gain experience with validating a real data set.
+
+Submit: Make a copy of this document and use it to record your results. Store a PDF copy of the document in your git repository along with any needed code before submitting using the in-class activity submission form. 
+
+Initial Discussion Question - Discuss the following question among your working group members at the beginning of the week and place your responses in this space. Or, if you have no such experience with invalid data then indicate this in the space below. 
+
+Have you ever worked with a set of data that included errors? Describe the situation, including how you discovered the errors and what you did about them.
+
+Response 1: I have not worked with data yet, until this class.
+
+Response 2: Second person has not worked with data yet. 
+
+Response 3: Third person has not worked with data yet.
+
+Response 4: Fourth person has not worked with data yet.
+
+The data set for this week is a listing of all Oregon automobile crashes on the Mt. Hood Hwy (Highway 26) during 2019. This data is provided by the Oregon Department of Transportation and is part of a larger data set that is often utilized for studies of roads, traffic and safety.
+
+Here is the available documentation for this data: description of columns, Oregon Crash Data Coding Manual
+
+Data validation is usually an iterative three-step process. 
+A.	Create assertions about the data
+B.	Write code to evaluate your assertions. 
+C.	Run the code, analyze the results and resolve any validation errors
+
+Repeat this ABC loop as many times as needed to fully validate your data.
+
+A. Create Assertions
+Access the crash data, review the associated documentation of the data (ignore the data itself for now). Based on the documentation, create English language assertions for various properties of the data. No need to be exhaustive. Develop one or two assertions in each of the following categories during your first iteration through the ABC process.
+1.	existence assertions. Example: “Every crash occurred on a date”
+  0.	 Every crash has a crash ID.
+2.	limit assertions. Example: “Every crash occurred during year 2019”
+  0.	Every crash ID has at only 3 record types.
+3.	intra-record assertions. Example: “Every crash has a unique ID”
+  0.	Every record type 1 entry has a serial number.
+4.	Create 2+ inter-record check assertions. Example: “Every vehicle listed in the crash data was part of a known crash”
+  0.	Each crash has a crash record type of record type 1.
+  1.	Every crash has at least one entry of record type 2.
+5.	Create 2+ summary assertions. Example: “There were thousands of crashes but not millions”
+  0.	On average, crashes involve 2 or more vehicles
+  1.	Most commonly, crashes involve 2 participants (meaning the mode for the number of participants in each crash is 2)
+6.	Create 2+ statistical distribution assertions. Example: “crashes are evenly/uniformly distributed throughout the months of the year.”
+  0.	Crashes are less likely to occur on a Monday.
+  1.	The majority of crashes occur when the weather conditions are a level 2 or higher.
+
+These are just examples. You may use these examples, but you should also create new ones of your own.
+B. Validate the Assertions
+  1.	Study the data in an editor or browser. Study it carefully, this data set is non-intuitive!. 
+  2.	Write python code to read in the test data. You are free to write your code any way you like, but we suggest that you use pandas’ methods for reading csv files into a pandas Dataframe.
+  3.	Write python code to validate each of the assertions that you created in part A. The pandas package eases the task of creating data validation code.
+  4.	If needed, update your assertions or create new assertions based on your analysis of the data.
+C. Run Your Code and Analyze the Results  
+In this space, list any assertion violations that you encountered:
+  •	 Assertion 5A had a lot of violations listed, however due to the phrasing of the assertion this is allowed.
+  •	 Assertion 5B also had a lot of violations listed, but this is allowed also due to the phrasing. 
+  •	 Assertion 6A is wrong, due to this the assertion should be changed to say that ‘the day of the week that is less likely to have a crash is Sunday  (week code 1)’.
+  •	Assertion 6B is also wrong. This assertion should also be changed as there are more than double the number of crashes when the weather code is 1, so the new assertion should be that ‘it is more likely that a crash occurs when the weather code is at a level 1’. 
+
+For each assertion violation, describe how to resolve the violation. Options might include:
+•	revise assumptions/assertions
+•	discard the violating row(s)
+•	Ignore
+•	add missing values
+•	Interpolate
+•	use defaults
+•	abandon the project because the data has too many problems and is unusable
+
+No need to write code to resolve the violations at this point, you will do that in step E.
+
+D. Learn and Iterate
+The process of validating data usually gives us a better understanding of any data set. What have you learned about the data set that you did not know at the beginning of the current ABC iteration?
+
+That the data is pretty spaced out. I thought there would be more patterns, like that there would be more accidents if the weather conditions were rainy compared to if the weather was sunny. The process allowed for a better understanding of the data that was provided to me. 
+
+
+Next, iterate through the process again by going back through steps A, B and C at least one more time. 
