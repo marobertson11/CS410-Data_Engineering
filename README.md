@@ -31,7 +31,7 @@ Main Project
 
   topic_clean.py: Designed to go through the Kafka topic that is provided in code and remove all entries withough sending messages to the server
 
-  tsvscript.py: This program will take a tsv document and convert it into a geojson that will be able to be readable for the server.py.
+  tsvscript.py: This program will take a tsv document and convert it into a geojson that will be able to be readable for the server.py. The tsv file has to be created through the PostgreSQL table queries.
 
   website-producer.py: This will gather the data that was gathered from the Event Stop website and preform the producer actions.
 
