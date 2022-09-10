@@ -3,12 +3,19 @@
 Current Completions:
 
 Week 2 in-class activities (Python) 
+
 Week 3 in-calss Activities (producer.py)
+
 Week 4 in-class Activities (Jupiter Python Notebook and pdf)
+
 Week 5 in-class Activities 
+
 Week 6 in-class Activities
+
 Week 7 in-class Activities (Jupiter Python Notebook)
+
 Week 8-9 In-class Activites 
+
 
 Main Project
 
