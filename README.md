@@ -1,5 +1,8 @@
 # CS410 Data Engineering
 
+Class description: This course explores the challenges of designing, building and maintaining data processing pipelines. We focus on concepts, techniques and technologies for gathering, validating, transporting, transforming, enhancing, storing, integrating and maintaining diverse data sets common to modern enterprises. Throughout the course we tie the course material to relevant ethical issues related to gathering, storing and processing of data.
+
+
 Current Completions:
 
 Week 2 in-class activities (Python) 
@@ -17,7 +20,7 @@ Week 7 in-class Activities (Jupiter Python Notebook)
 Week 8-9 In-class Activites 
 
 
-Main Project
+Main Project: This project is designed to build, develop, test, and monitor a small data pipeline. The data that was gathered was provided by the TriMet C-TRAN bus system. There were two websites that provided information. The first website provided records of a bus that was had its information recorded roughly every 5 seconds while it was in use. The information that was provided from these buses are the vehicle ID number, the event trip ID that it was preforming, the event Stop ID that it was either going towards or currently at, the operation date, the distance that it traveled, the velocity, the time (measured in seconds since the beginning of the day), its current velocity, the direction it was traveling in (measured in a 360 degree number), the GPS Longitude and Latitude, the GPS satellite it was currently under, and the deviation from its schedule that it was measured at. The second website has similar information, with the inclusion of whether the trip it was currently preforming was going to or from it's original starting location, and what the route number was. The information was gathered from both websites and, as long as it was viable information, sent to a PostgreSQL table. Once in a table, a PostgreSQL query would be able to create a document that could be converted into a visual representation of the corresponding records that were in relation to the query. 
 
   run.sh: This is the bash program that will run at the beginning of each morning. 
 
