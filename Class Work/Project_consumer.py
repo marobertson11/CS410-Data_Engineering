@@ -58,7 +58,7 @@ def timeCheck(info):#IF ACT_TIME IS BETWEEN 0-86399 (WITHIN THE TIME OF 1 DAY
 def checkMonth(date):#TURN STRING MONTH INTO DIGIT FORM OF STRING
   if (date[3:6] == "JAN"):
       return "01"
-      if (date[3:6] == "FEB"):
+  if (date[3:6] == "FEB"):
       return "02"
   if (date[3:6] == "MAR"):
       return "03"
@@ -118,7 +118,7 @@ if __name__ == '__main__':
     config_file = args.config_file
     topic = args.topic
     conf = ccloud_lib.read_ccloud_config(config_file)
-        tripNums = loadTripIds()
+    tripNums = loadTripIds()
     goodData = 0#COUNT OF VALID DATA
     badData = 0 # COUNT OF DATA THAT IS REMOVED
     breadData = []

@@ -4,9 +4,9 @@ virtualenv ccloud-venv
 source ./ccloud-venv/bin/activate
 ./topic_clean.py -f /home/mar32/examples/librdkafka.config -t datajob
 sleep 5
-./producer.py -f /home/mar32/examples/librdkafka.config -t datajob 
+./data_producer.py -f /home/mar32/examples/librdkafka.config -t datajob 
 sleep 5
-./consumer.py -f /home/mar32/examples/librdkafka.config -t datajob
+./data_consumer.py -f /home/mar32/examples/librdkafka.config -t datajob
 sleep 5
 ./topic_clean.py -f /home/mar32/examples/librdkafka.config -t datajob
 
